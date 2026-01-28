@@ -39,21 +39,21 @@ const Index = () => {
           return;
         }
 
-        const particleCount = Math.floor((timeLeft / duration) * 50);
+        const particleCount = Math.floor((timeLeft / duration) * 100);
 
         confetti({
           ...defaults,
-          particleCount: Math.max(particleCount / 10, 1),
+          particleCount: Math.max(particleCount / 5, 2),
           origin: { x: Math.random() * 0.4, y: Math.random() - 0.2 },
           colors: ['#FFD700', '#FFA500', '#9b87f5']
         });
         confetti({
           ...defaults,
-          particleCount: Math.max(particleCount / 10, 1),
+          particleCount: Math.max(particleCount / 5, 2),
           origin: { x: Math.random() * 0.4 + 0.6, y: Math.random() - 0.2 },
           colors: ['#FFD700', '#FFA500', '#9b87f5']
         });
-      }, 250);
+      }, 200);
 
       if (confettiTimeoutRef.current) {
         clearTimeout(confettiTimeoutRef.current);
