@@ -16,8 +16,16 @@ const Index = () => {
     { label: "мясо", value: meat, setValue: setMeat },
   ];
 
+  const totalScore = (
+    design[0] / 10 +
+    beat[0] / 10 +
+    vocal[0] / 10 +
+    implementation[0] / 10 +
+    meat[0] / 10
+  ).toFixed(1);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-4">
+    <div className="min-h-screen flex items-center justify-center bg-white px-4 py-12">
       <div className="w-full max-w-2xl space-y-12 animate-fade-in">
         {sliders.map((slider, index) => (
           <div
@@ -42,6 +50,20 @@ const Index = () => {
             />
           </div>
         ))}
+
+        <div 
+          className="pt-8 mt-16 border-t border-gray-200"
+          style={{ animationDelay: '500ms' }}
+        >
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-light tracking-wide text-gray-800">
+              общая оценка
+            </h2>
+            <span className="text-5xl font-medium text-primary tabular-nums">
+              {totalScore}
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
