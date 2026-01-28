@@ -17,12 +17,34 @@ const Index = () => {
   ];
 
   const totalScore = (
-    design[0] / 10 +
-    beat[0] / 10 +
-    vocal[0] / 10 +
-    implementation[0] / 10 +
-    meat[0] / 10
-  ).toFixed(1);
+    design[0] / 5 +
+    beat[0] / 5 +
+    vocal[0] / 5 +
+    implementation[0] / 5 +
+    meat[0] / 5
+  ) / 10;
+
+  const getScoreColor = (score: number) => {
+    if (score < 2.5) {
+      const ratio = score / 2.5;
+      const r = 239;
+      const g = Math.round(68 + (234 - 68) * ratio);
+      const b = Math.round(68 + (132 - 68) * ratio);
+      return `rgb(${r}, ${g}, ${b})`;
+    } else if (score < 7.5) {
+      const ratio = (score - 2.5) / 5;
+      const r = Math.round(239 - (239 - 34) * ratio);
+      const g = Math.round(234 - (234 - 197) * ratio);
+      const b = Math.round(132 - (132 - 94) * ratio);
+      return `rgb(${r}, ${g}, ${b})`;
+    } else {
+      const ratio = (score - 7.5) / 2.5;
+      const r = Math.round(34 + (255 - 34) * ratio);
+      const g = Math.round(197 + (215 - 197) * ratio);
+      const b = Math.round(94 + (0 - 94) * ratio);
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4 py-12">
@@ -59,8 +81,11 @@ const Index = () => {
             <h2 className="text-3xl font-light tracking-wide text-gray-800">
               общая оценка
             </h2>
-            <span className="text-5xl font-medium text-primary tabular-nums">
-              {totalScore}
+            <span 
+              className="text-5xl font-medium tabular-nums transition-colors duration-300"
+              style={{ color: getScoreColor(totalScore) }}
+            >
+              {totalScore.toFixed(1)}
             </span>
           </div>
         </div>
