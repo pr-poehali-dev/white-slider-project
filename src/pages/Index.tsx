@@ -27,44 +27,44 @@ const Index = () => {
                      meat[0] === 100;
 
     if (allMaxed) {
-      const duration = 5000;
-      const end = Date.now() + duration;
+      const duration = 3000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
-      const frame = () => {
-        confetti({
-          particleCount: 3,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 },
-          colors: ['#FFD700', '#FFA500', '#FF6347', '#9b87f5']
-        });
-        confetti({
-          particleCount: 3,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 },
-          colors: ['#FFD700', '#FFA500', '#FF6347', '#9b87f5']
-        });
-
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
+      const interval = setInterval(() => {
+        const timeLeft = animationEnd - Date.now();
+        
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          return;
         }
-      };
 
-      frame();
+        const particleCount = Math.floor((timeLeft / duration) * 50);
+
+        confetti({
+          ...defaults,
+          particleCount: Math.max(particleCount / 10, 1),
+          origin: { x: Math.random() * 0.4, y: Math.random() - 0.2 },
+          colors: ['#FFD700', '#FFA500', '#9b87f5']
+        });
+        confetti({
+          ...defaults,
+          particleCount: Math.max(particleCount / 10, 1),
+          origin: { x: Math.random() * 0.4 + 0.6, y: Math.random() - 0.2 },
+          colors: ['#FFD700', '#FFA500', '#9b87f5']
+        });
+      }, 250);
 
       if (confettiTimeoutRef.current) {
         clearTimeout(confettiTimeoutRef.current);
       }
 
-      confettiTimeoutRef.current = setTimeout(() => {
-        confetti.reset();
-      }, duration);
+      confettiTimeoutRef.current = interval as unknown as NodeJS.Timeout;
     }
 
     return () => {
       if (confettiTimeoutRef.current) {
-        clearTimeout(confettiTimeoutRef.current);
+        clearInterval(confettiTimeoutRef.current as unknown as number);
       }
     };
   }, [design, beat, vocal, implementation, meat]);
