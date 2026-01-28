@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
+import confetti from "canvas-confetti";
 
 const Index = () => {
   const [design, setDesign] = useState([50]);
@@ -8,6 +9,7 @@ const Index = () => {
   const [vocal, setVocal] = useState([50]);
   const [implementation, setImplementation] = useState([50]);
   const [meat, setMeat] = useState([50]);
+  const confettiTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleReset = () => {
     setDesign([0]);
@@ -16,6 +18,56 @@ const Index = () => {
     setImplementation([0]);
     setMeat([0]);
   };
+
+  useEffect(() => {
+    const allMaxed = design[0] === 100 && 
+                     beat[0] === 100 && 
+                     vocal[0] === 100 && 
+                     implementation[0] === 100 && 
+                     meat[0] === 100;
+
+    if (allMaxed) {
+      const duration = 5000;
+      const end = Date.now() + duration;
+
+      const frame = () => {
+        confetti({
+          particleCount: 3,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#FFD700', '#FFA500', '#FF6347', '#9b87f5']
+        });
+        confetti({
+          particleCount: 3,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#FFD700', '#FFA500', '#FF6347', '#9b87f5']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      };
+
+      frame();
+
+      if (confettiTimeoutRef.current) {
+        clearTimeout(confettiTimeoutRef.current);
+      }
+
+      confettiTimeoutRef.current = setTimeout(() => {
+        confetti.reset();
+      }, duration);
+    }
+
+    return () => {
+      if (confettiTimeoutRef.current) {
+        clearTimeout(confettiTimeoutRef.current);
+      }
+    };
+  }, [design, beat, vocal, implementation, meat]);
 
   const sliders = [
     { label: "дизайнерство", value: design, setValue: setDesign },
