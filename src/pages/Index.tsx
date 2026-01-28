@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [design, setDesign] = useState([50]);
@@ -7,6 +8,14 @@ const Index = () => {
   const [vocal, setVocal] = useState([50]);
   const [implementation, setImplementation] = useState([50]);
   const [meat, setMeat] = useState([50]);
+
+  const handleReset = () => {
+    setDesign([0]);
+    setBeat([0]);
+    setVocal([0]);
+    setImplementation([0]);
+    setMeat([0]);
+  };
 
   const sliders = [
     { label: "дизайнерство", value: design, setValue: setDesign },
@@ -49,6 +58,16 @@ const Index = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4 py-12">
       <div className="w-full max-w-2xl space-y-12 animate-fade-in">
+        <div className="flex justify-end">
+          <Button 
+            onClick={handleReset}
+            variant="outline"
+            className="text-gray-600 hover:text-gray-900"
+          >
+            сбросить
+          </Button>
+        </div>
+
         {sliders.map((slider, index) => (
           <div
             key={slider.label}
