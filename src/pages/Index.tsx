@@ -108,7 +108,10 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center bg-white px-4 py-12 relative">
+      <div className="fixed bottom-4 left-4 text-xs text-gray-400 font-light">
+        by zxclozer & ayoluvme
+      </div>
       <div className="w-full max-w-2xl space-y-12 animate-fade-in">
         <div className="flex justify-end">
           <Button 
