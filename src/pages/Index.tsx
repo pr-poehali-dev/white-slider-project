@@ -109,7 +109,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4 py-12 relative">
-      <div className="fixed bottom-4 left-4 text-sm text-gray-400 font-light">
+      <div className="fixed bottom-4 left-4 text-base text-gray-600 font-normal">
         by zxclozer & ayoluvme
       </div>
       <div className="w-full max-w-2xl space-y-12 animate-fade-in">
